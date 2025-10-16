@@ -1,0 +1,16 @@
+[project]
+name = "adaptor"
+version = "0.1.0"
+description = "FastAPI application with configurable database adapters"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.17.0",
+    "asyncpg>=0.30.0",
+    "aiomysql>=0.2.0",
+    "fastapi[standard]>=0.119.0",
+    "pydantic-settings>=2.11.0",
+    "python-dotenv>=1.1.1",
+    "sqlalchemy>=2.0.44",
+    "cryptography>=46.0.3",
+]

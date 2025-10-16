@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  # FastAPI Application
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi_server
+    image: server
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fastapi_db
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_DATABASE=fastapi_db
+    depends_on:
+      - postgres_db
+      - mysql
+    volumes:
+      - ./app:/app/app
+      - ./adapters:/app/adapters
+      - ./db:/app/db
+    restart: unless-stopped
+
+  # PostgreSQL Database
+  postgres_db:
+    image: postgres:17.5
+    container_name: postgres-db
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=fastapi_db
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_DATABASE=fastapi_db
+      - MYSQL_USER=fastapi
+      - MYSQL_PASSWORD=fastapi
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
