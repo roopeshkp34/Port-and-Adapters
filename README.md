@@ -70,7 +70,7 @@ adaptor/
 
 ```bash
 # Clone the repository (if applicable)
-git clone <your-repo-url>
+git clone git@github.com:roopeshkp34/Port-and-Adapters.git
 cd adaptor
 
 # Create environment file
@@ -223,7 +223,7 @@ async def create_book(book: BookCreate, db: DBAdapter):
 
 3. **Run the application**:
    ```bash
-uvicorn app.main:app --reload --port ${BACKEND_PORT:-9020}
+   uvicorn app.main:app --reload --port ${BACKEND_PORT:-9020}
    ```
 
 ### Database Migrations (PostgreSQL)
